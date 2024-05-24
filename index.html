@@ -161,7 +161,7 @@
     </div>
 
     <script>
-        document.getElementById('orderForm').addEventListener('change', function() {
+        function updateToppingsDisplay() {
             const orders = document.querySelectorAll('input[name="order"]:checked');
             const toppingsDiv = document.getElementById('toppings');
             const pancakeToppings = document.getElementById('pancake-toppings');
@@ -185,20 +185,22 @@
                 } else if (order.value === 'Eggs') {
                     toppingsDiv.style.display = 'block';
                     eggsToppings.style.display = 'block';
+
+                    // Attach event listener for egg-style change
+                    document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            if (this.value === 'Omelette') {
+                                omeletteToppings.style.display = 'block';
+                            } else {
+                                omeletteToppings.style.display = 'none';
+                            }
+                        });
+                    });
                 }
             });
+        }
 
-            // Attach event listener for egg-style change
-            document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    if (this.value === 'Omelette') {
-                        omeletteToppings.style.display = 'block';
-                    } else {
-                        omeletteToppings.style.display = 'none';
-                    }
-                });
-            });
-        });
+        document.getElementById('orderForm').addEventListener('change', updateToppingsDisplay);
 
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -237,4 +239,4 @@
     </script>
 </body>
 </html>
-//version 0.1.0
+//version 0.1.1
