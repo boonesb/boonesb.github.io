@@ -188,6 +188,12 @@
                     eggsToppings.style.display = 'block';
                 }
             });
+
+            // Ensure egg style change handler is set up
+            const eggStyles = document.querySelectorAll('input[name="egg-style"]');
+            eggStyles.forEach(radio => {
+                radio.addEventListener('change', handleEggStyleChange);
+            });
         }
 
         function handleEggStyleChange() {
@@ -205,10 +211,6 @@
         }
 
         document.getElementById('orderForm').addEventListener('change', updateToppingsDisplay);
-
-        document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
-            radio.addEventListener('change', handleEggStyleChange);
-        });
 
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -247,4 +249,4 @@
     </script>
 </body>
 </html>
-//version 0.1.3
+//version 0.1.4
