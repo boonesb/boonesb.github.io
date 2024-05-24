@@ -185,22 +185,25 @@
                 } else if (order.value === 'Eggs') {
                     toppingsDiv.style.display = 'block';
                     eggsToppings.style.display = 'block';
-
-                    // Attach event listener for egg-style change
-                    document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
-                        radio.addEventListener('change', function() {
-                            if (this.value === 'Omelette') {
-                                omeletteToppings.style.display = 'block';
-                            } else {
-                                omeletteToppings.style.display = 'none';
-                            }
-                        });
-                    });
                 }
             });
         }
 
+        function handleEggStyleChange() {
+            const eggStyle = document.querySelector('input[name="egg-style"]:checked');
+            const omeletteToppings = document.getElementById('omelette-toppings');
+
+            if (eggStyle && eggStyle.value === 'Omelette') {
+                omeletteToppings.style.display = 'block';
+            } else {
+                omeletteToppings.style.display = 'none';
+            }
+        }
+
         document.getElementById('orderForm').addEventListener('change', updateToppingsDisplay);
+        document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
+            radio.addEventListener('change', handleEggStyleChange);
+        });
 
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -239,4 +242,4 @@
     </script>
 </body>
 </html>
-//version 0.1.1
+//version 0.1.2
