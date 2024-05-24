@@ -57,6 +57,9 @@
         button:hover {
             background-color: #0056b3;
         }
+        #order-form {
+            display: none;
+        }
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -86,7 +89,7 @@
         <h2>Eggs</h2>
         <p>Any way you want em... or order an Omelette. Mix and Match: Green Bell Peppers, Onions, Scallions, Diced Tomatoes, Cheese, Roasted Red Peppers, Jalapeño. If you don't know, now you know.</p>
 
-        <button onclick="document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });">Order Ahead</button>
+        <button onclick="document.getElementById('order-form').style.display = 'block';document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });">Order Ahead</button>
     </div>
 
     <div id="order-form" class="container">
