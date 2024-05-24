@@ -256,6 +256,7 @@
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     alert('Order placed successfully!');
+                    window.location.href = 'thank-you.html';  // Redirect to the thank-you page
                 }, function(error) {
                     console.log('FAILED...', error);
                     alert('Failed to place order. Please try again later.');
