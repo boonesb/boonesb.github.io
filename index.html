@@ -188,6 +188,7 @@
                 }
             });
 
+            // Attach event listener for egg-style change
             document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     if (this.value === 'Omelette') {
@@ -230,7 +231,10 @@
 
             window.location.href = `mailto:your-email@example.com?subject=New Order&body=${encodeURIComponent(emailBody)}`;
         });
+
+        // Ensure omelette toppings are hidden initially
+        document.getElementById('omelette-toppings').style.display = 'none';
     </script>
 </body>
 </html>
-// End Path: index.html
+//version 0.1.0
