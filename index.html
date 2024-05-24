@@ -105,6 +105,9 @@
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name" required><br><br>
 
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+
             <label for="order">Order:</label><br>
             <input type="checkbox" id="pancakes" name="order" value="Pancakes">
             <label for="pancakes">Pancakes</label><br>
@@ -206,6 +209,7 @@
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
             const orders = Array.from(document.querySelectorAll('input[name="order"]:checked')).map(order => order.value);
             let toppings = '';
 
@@ -232,9 +236,11 @@
 
             // Replace the following with your EmailJS service and template IDs
             const templateParams = {
+                to_email: email,  // Email of the user placing the order
                 name: name,
                 order: orders.join(', '),
-                toppings: toppings.slice(0, -2)
+                toppings: toppings.slice(0, -2),
+                cc_email: 'your-email@example.com'  // Replace with your email to get a copy
             };
 
             emailjs.send('service_dmc83ir', 'template_hn5ji6k', templateParams)  // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
@@ -249,4 +255,4 @@
     </script>
 </body>
 </html>
-//version 0.1.11
+//version 0.1.13
