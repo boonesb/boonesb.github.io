@@ -161,57 +161,40 @@
     </div>
 
     <script>
-        function updateToppingsDisplay() {
-            console.log("Updating toppings display...");
-            const orders = document.querySelectorAll('input[name="order"]:checked');
+        document.getElementById('orderForm').addEventListener('change', function () {
             const toppingsDiv = document.getElementById('toppings');
             const pancakeToppings = document.getElementById('pancake-toppings');
             const sandwichToppings = document.getElementById('sandwich-toppings');
             const eggsToppings = document.getElementById('eggs-toppings');
             const omeletteToppings = document.getElementById('omelette-toppings');
 
+            // Hide all toppings initially
             toppingsDiv.style.display = 'none';
             pancakeToppings.style.display = 'none';
             sandwichToppings.style.display = 'none';
             eggsToppings.style.display = 'none';
             omeletteToppings.style.display = 'none';
 
-            orders.forEach(order => {
-                if (order.value === 'Pancakes') {
-                    toppingsDiv.style.display = 'block';
-                    pancakeToppings.style.display = 'block';
-                } else if (order.value === 'Sandwich') {
-                    toppingsDiv.style.display = 'block';
-                    sandwichToppings.style.display = 'block';
-                } else if (order.value === 'Eggs') {
-                    toppingsDiv.style.display = 'block';
-                    eggsToppings.style.display = 'block';
-                }
-            });
-
-            const eggStyles = document.querySelectorAll('input[name="egg-style"]');
-            eggStyles.forEach(radio => {
-                radio.addEventListener('change', handleEggStyleChange);
-            });
-        }
-
-        function handleEggStyleChange() {
-            console.log("Egg style changed...");
-            const eggStyle = document.querySelector('input[name="egg-style"]:checked');
-            const omeletteToppings = document.getElementById('omelette-toppings');
-
-            if (eggStyle && eggStyle.value === 'Omelette') {
-                console.log("Omelette selected, showing toppings...");
-                omeletteToppings.style.display = 'block';
-                console.log(omeletteToppings.style.display); // log the current display property
-            } else {
-                console.log("Omelette not selected, hiding toppings...");
-                omeletteToppings.style.display = 'none';
-                console.log(omeletteToppings.style.display); // log the current display property
+            // Show the appropriate toppings based on selections
+            const selectedOrders = Array.from(document.querySelectorAll('input[name="order"]:checked')).map(el => el.value);
+            if (selectedOrders.includes('Pancakes')) {
+                toppingsDiv.style.display = 'block';
+                pancakeToppings.style.display = 'block';
             }
-        }
+            if (selectedOrders.includes('Sandwich')) {
+                toppingsDiv.style.display = 'block';
+                sandwichToppings.style.display = 'block';
+            }
+            if (selectedOrders.includes('Eggs')) {
+                toppingsDiv.style.display = 'block';
+                eggsToppings.style.display = 'block';
 
-        document.getElementById('orderForm').addEventListener('change', updateToppingsDisplay);
+                const selectedEggStyle = document.querySelector('input[name="egg-style"]:checked');
+                if (selectedEggStyle && selectedEggStyle.value === 'Omelette') {
+                    omeletteToppings.style.display = 'block';
+                }
+            }
+        });
 
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -244,10 +227,7 @@
 
             window.location.href = `mailto:your-email@example.com?subject=New Order&body=${encodeURIComponent(emailBody)}`;
         });
-
-        // Ensure omelette toppings are hidden initially
-        document.getElementById('omelette-toppings').style.display = 'none';
     </script>
 </body>
 </html>
-//version 0.1.7
+//version 0.1.8
