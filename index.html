@@ -162,6 +162,7 @@
 
     <script>
         function updateToppingsDisplay() {
+            console.log("Updating toppings display...");
             const orders = document.querySelectorAll('input[name="order"]:checked');
             const toppingsDiv = document.getElementById('toppings');
             const pancakeToppings = document.getElementById('pancake-toppings');
@@ -190,17 +191,21 @@
         }
 
         function handleEggStyleChange() {
+            console.log("Egg style changed...");
             const eggStyle = document.querySelector('input[name="egg-style"]:checked');
             const omeletteToppings = document.getElementById('omelette-toppings');
 
             if (eggStyle && eggStyle.value === 'Omelette') {
+                console.log("Omelette selected, showing toppings...");
                 omeletteToppings.style.display = 'block';
             } else {
+                console.log("Omelette not selected, hiding toppings...");
                 omeletteToppings.style.display = 'none';
             }
         }
 
         document.getElementById('orderForm').addEventListener('change', updateToppingsDisplay);
+
         document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
             radio.addEventListener('change', handleEggStyleChange);
         });
@@ -242,4 +247,4 @@
     </script>
 </body>
 </html>
-//version 0.1.2
+//version 0.1.3
