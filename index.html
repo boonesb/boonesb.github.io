@@ -242,7 +242,7 @@
                 toppings: toppings.slice(0, -2),
                 cc_email: 'boonesb@gmail.com'  // Replace with your email to get a copy
             };
-
+            console.log(templateParams);
             emailjs.send('service_dmc83ir', 'template_hn5ji6k', templateParams)  // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
@@ -251,9 +251,9 @@
                     console.log('FAILED...', error);
                     alert('Failed to place order. Please try again later.');
                 });
-                console.log(templateParams);
+                
         });
     </script>
 </body>
 </html>
-//version 0.1.14
+//version 0.1.15
