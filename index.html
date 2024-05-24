@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memorial Day Brunch 2024</title>
+    <title>Lost Hollow Memorial Day Brunch 2024</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,6 +73,11 @@
             p {
                 font-size: 0.9em;
             }
+        }
+        .version {
+            color: #007bff;
+            font-size: 1em;
+            margin-top: 20px;
         }
     </style>
     <!-- Add EmailJS SDK -->
@@ -170,6 +175,10 @@
         </form>
     </div>
 
+    <div class="version">
+        Version 5.7.24
+    </div>
+
     <script>
         document.getElementById('orderForm').addEventListener('change', function () {
             const toppingsDiv = document.getElementById('toppings');
@@ -251,9 +260,7 @@
                     console.log('FAILED...', error);
                     alert('Failed to place order. Please try again later.');
                 });
-                
         });
     </script>
 </body>
 </html>
-//version 0.1.18
