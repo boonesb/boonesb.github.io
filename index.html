@@ -13,6 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
         }
         .container {
@@ -24,6 +25,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 3px solid #007bff;
+            margin-bottom: 20px;
         }
         h1 {
             text-align: center;
@@ -40,6 +42,20 @@
             font-style: italic;
             margin: 5px 0 20px 0;
             color: #5a5a5a;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         @media (max-width: 600px) {
             .container {
@@ -69,6 +85,63 @@
 
         <h2>Eggs</h2>
         <p>Any way you want em... or order an Omelette. Mix and Match: Green Bell Peppers, Onions, Scallions, Diced Tomatoes, Cheese, Roasted Red Peppers, Jalapeño. If you don't know, now you know.</p>
+
+        <button onclick="document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });">Order Ahead</button>
     </div>
+
+    <div id="order-form" class="container">
+        <h2>Order Ahead</h2>
+        <form id="orderForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="order">Order:</label><br>
+            <input type="radio" id="pancakes" name="order" value="Pancakes">
+            <label for="pancakes">Pancakes</label><br>
+            <input type="radio" id="sandwich" name="order" value="Sandwich">
+            <label for="sandwich">Breakfast Sandwich</label><br>
+            <input type="radio" id="eggs" name="order" value="Eggs">
+            <label for="eggs">Eggs</label><br><br>
+
+            <div id="toppings" style="display:none;">
+                <label for="toppings">Select Toppings:</label><br>
+                <input type="checkbox" id="topping1" name="toppings" value="Butter">
+                <label for="topping1">Butter</label><br>
+                <input type="checkbox" id="topping2" name="toppings" value="Syrup">
+                <label for="topping2">Syrup</label><br>
+                <input type="checkbox" id="topping3" name="toppings" value="Whip Cream">
+                <label for="topping3">Whip Cream</label><br>
+                <input type="checkbox" id="topping4" name="toppings" value="Berries">
+                <label for="topping4">Berries</label><br><br>
+            </div>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('orderForm').addEventListener('change', function() {
+            const order = document.querySelector('input[name="order"]:checked').value;
+            const toppingsDiv = document.getElementById('toppings');
+            if (order === 'Pancakes' || order === 'Eggs') {
+                toppingsDiv.style.display = 'block';
+            } else {
+                toppingsDiv.style.display = 'none';
+            }
+        });
+
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const order = document.querySelector('input[name="order"]:checked').value;
+            const toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked'))
+                                  .map(topping => topping.value)
+                                  .join(', ');
+
+            const emailBody = `Name: ${name}\nOrder: ${order}\nToppings: ${toppings}`;
+
+            window.location.href = `mailto:your-email@example.com?subject=New Order&body=${encodeURIComponent(emailBody)}`;
+        });
+    </script>
 </body>
 </html>
