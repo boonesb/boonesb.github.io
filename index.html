@@ -99,11 +99,11 @@
             <input type="text" id="name" name="name" required><br><br>
 
             <label for="order">Order:</label><br>
-            <input type="radio" id="pancakes" name="order" value="Pancakes">
+            <input type="checkbox" id="pancakes" name="order" value="Pancakes">
             <label for="pancakes">Pancakes</label><br>
-            <input type="radio" id="sandwich" name="order" value="Sandwich">
+            <input type="checkbox" id="sandwich" name="order" value="Sandwich">
             <label for="sandwich">Breakfast Sandwich</label><br>
-            <input type="radio" id="eggs" name="order" value="Eggs">
+            <input type="checkbox" id="eggs" name="order" value="Eggs">
             <label for="eggs">Eggs</label><br><br>
 
             <div id="toppings" style="display:none;">
@@ -162,26 +162,31 @@
 
     <script>
         document.getElementById('orderForm').addEventListener('change', function() {
-            const order = document.querySelector('input[name="order"]:checked').value;
+            const orders = document.querySelectorAll('input[name="order"]:checked');
             const toppingsDiv = document.getElementById('toppings');
             const pancakeToppings = document.getElementById('pancake-toppings');
             const sandwichToppings = document.getElementById('sandwich-toppings');
             const eggsToppings = document.getElementById('eggs-toppings');
             const omeletteToppings = document.getElementById('omelette-toppings');
 
-            toppingsDiv.style.display = 'block';
+            toppingsDiv.style.display = 'none';
             pancakeToppings.style.display = 'none';
             sandwichToppings.style.display = 'none';
             eggsToppings.style.display = 'none';
             omeletteToppings.style.display = 'none';
 
-            if (order === 'Pancakes') {
-                pancakeToppings.style.display = 'block';
-            } else if (order === 'Sandwich') {
-                sandwichToppings.style.display = 'block';
-            } else if (order === 'Eggs') {
-                eggsToppings.style.display = 'block';
-            }
+            orders.forEach(order => {
+                if (order.value === 'Pancakes') {
+                    toppingsDiv.style.display = 'block';
+                    pancakeToppings.style.display = 'block';
+                } else if (order.value === 'Sandwich') {
+                    toppingsDiv.style.display = 'block';
+                    sandwichToppings.style.display = 'block';
+                } else if (order.value === 'Eggs') {
+                    toppingsDiv.style.display = 'block';
+                    eggsToppings.style.display = 'block';
+                }
+            });
 
             document.querySelectorAll('input[name="egg-style"]').forEach(radio => {
                 radio.addEventListener('change', function() {
@@ -197,26 +202,31 @@
         document.getElementById('orderForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
-            const order = document.querySelector('input[name="order"]:checked').value;
+            const orders = Array.from(document.querySelectorAll('input[name="order"]:checked')).map(order => order.value);
             let toppings = '';
 
-            if (order === 'Sandwich') {
-                toppings = Array.from(document.querySelectorAll('input[name="sandwich-toppings"]:checked'))
-                                .map(topping => topping.value)
-                                .join(', ');
-            } else if (order === 'Eggs') {
-                const eggStyle = document.querySelector('input[name="egg-style"]:checked').value;
-                if (eggStyle === 'Omelette') {
-                    const omeletteToppings = Array.from(document.querySelectorAll('input[name="omelette-toppings"]:checked'))
+            orders.forEach(order => {
+                if (order === 'Pancakes') {
+                    toppings += 'Serve Yourself Stacks, ';
+                } else if (order === 'Sandwich') {
+                    const sandwichToppings = Array.from(document.querySelectorAll('input[name="sandwich-toppings"]:checked'))
                                                   .map(topping => topping.value)
                                                   .join(', ');
-                    toppings = `Omelette with ${omeletteToppings}`;
-                } else {
-                    toppings = eggStyle;
+                    toppings += `Sandwich with ${sandwichToppings}, `;
+                } else if (order === 'Eggs') {
+                    const eggStyle = document.querySelector('input[name="egg-style"]:checked').value;
+                    if (eggStyle === 'Omelette') {
+                        const omeletteToppings = Array.from(document.querySelectorAll('input[name="omelette-toppings"]:checked'))
+                                                      .map(topping => topping.value)
+                                                      .join(', ');
+                        toppings += `Omelette with ${omeletteToppings}, `;
+                    } else {
+                        toppings += `${eggStyle}, `;
+                    }
                 }
-            }
+            });
 
-            const emailBody = `Name: ${name}\nOrder: ${order}\nToppings: ${toppings}`;
+            const emailBody = `Name: ${name}\nOrder: ${orders.join(', ')}\nToppings: ${toppings.slice(0, -2)}`;
 
             window.location.href = `mailto:your-email@example.com?subject=New Order&body=${encodeURIComponent(emailBody)}`;
         });
