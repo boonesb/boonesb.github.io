@@ -189,7 +189,6 @@
                 }
             });
 
-            // Ensure egg style change handler is set up
             const eggStyles = document.querySelectorAll('input[name="egg-style"]');
             eggStyles.forEach(radio => {
                 radio.addEventListener('change', handleEggStyleChange);
@@ -204,9 +203,11 @@
             if (eggStyle && eggStyle.value === 'Omelette') {
                 console.log("Omelette selected, showing toppings...");
                 omeletteToppings.style.display = 'block';
+                console.log(omeletteToppings.style.display); // log the current display property
             } else {
                 console.log("Omelette not selected, hiding toppings...");
                 omeletteToppings.style.display = 'none';
+                console.log(omeletteToppings.style.display); // log the current display property
             }
         }
 
@@ -249,4 +250,4 @@
     </script>
 </body>
 </html>
-//version 0.1.6
+//version 0.1.7
